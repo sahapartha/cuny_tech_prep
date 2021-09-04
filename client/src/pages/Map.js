@@ -2,36 +2,8 @@ import React from 'react'
 import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "react-google-maps";
 import Autocomplete from 'react-google-autocomplete';
 import Geocode from "react-geocode";
-
 Geocode.setApiKey("AIzaSyD4FMcXyF-VQNeW0uUqtmlJjxV0vgkWshA");
-Geocode.setLanguage("en");
-
-
-Geocode.setRegion("es");
-
 Geocode.enableDebug();
-
-
-// function Parks() {
-//   return (
-//     <div>
-//       htis 
-//     </div>
-//   );
-// }
-
-// function Map(){
-// return (
-//   <div></div>
-//      google={this.props.google}
-//      center={{lat: 18.5204, lng: 73.8567}}
-//      height='300px'
-//      zoom={15}
-
-// );
-// }
-
-
 class Map extends React.Component{
 constructor( props ){
   super( props );
@@ -79,7 +51,9 @@ constructor( props ){
 /**
   * Component should only update ( meaning re-render ), when the user selects the address, or drags the pin
   *
-  
+  * @param nextProps
+  * @param nextState
+  * @return {boolean}
   */
  shouldComponentUpdate( nextProps, nextState ){
   if (
@@ -97,7 +71,8 @@ constructor( props ){
 /**
   * Get the city and set the city input value to the one selected
   *
-  * 
+  * @param addressArray
+  * @return {string}
   */
  getCity = ( addressArray ) => {
   let city = '';
@@ -111,7 +86,8 @@ constructor( props ){
 /**
   * Get the area and set the area input value to the one selected
   *
-  * 
+  * @param addressArray
+  * @return {string}
   */
  getArea = ( addressArray ) => {
   let area = '';
@@ -129,7 +105,8 @@ constructor( props ){
 /**
   * Get the address and set the address input value to the one selected
   *
-  * 
+  * @param addressArray
+  * @return {string}
   */
  getState = ( addressArray ) => {
   let state = '';
@@ -144,7 +121,7 @@ constructor( props ){
  };
 /**
   * And function for city,state and address input
-  * 
+  * @param event
   */
  onChange = ( event ) => {
   this.setState({ [event.target.name]: event.target.value });
@@ -152,13 +129,13 @@ constructor( props ){
 /**
   * This Event triggers when the marker window is closed
   *
-  * 
+  * @param event
   */
  onInfoWindowClose = ( event ) => {
 };
 /**
   * When the user types an address in the search box
-  * 
+  * @param place
   */
  onPlaceSelected = ( place ) => {
 const address = place.formatted_address,
@@ -189,7 +166,7 @@ const address = place.formatted_address,
   * Use geocode to get the address, city, area and state from the lat and lng positions.
   * And then set those values in the state.
   *
-  * 
+  * @param event
   */
  onMarkerDragEnd = ( event ) => {
   console.log( 'event', event );
@@ -296,5 +273,4 @@ let map;
   return( map )
  }
 }
-
-export default Map;
+export default Map

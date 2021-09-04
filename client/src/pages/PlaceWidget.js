@@ -7,6 +7,7 @@ import pic2 from "./pic2.png";
 import pic1 from "./pic1.jpg";
 import { useHistory } from "react-router-dom";
 import {Redirect} from 'react-router-dom';
+import './PlaceWidget.css';
 
 
 
@@ -45,12 +46,14 @@ class PlaceWidget extends React.Component {
     <div>
       <div class="searchIcon">
       <input
+        
         type="text"
         placeholder="Search"
-      />
-       Search your Place 
+      
+       />
+       
       </div>
-      <div>
+      <div class="button">
       <>
         <Button variant="primary" onClick={this.onSubmit}> Parks</Button>{' '}
         <Button variant="secondary">Beaches</Button>{' '}
@@ -71,8 +74,8 @@ class PlaceWidget extends React.Component {
            alt="First slide"
         />
        <Carousel.Caption>
-       <h3>First slide label</h3>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+       <h3>Places to meet with your dearest ones</h3>
+        <p></p>
        </Carousel.Caption>
       </Carousel.Item>
       
@@ -83,8 +86,8 @@ class PlaceWidget extends React.Component {
         alt="second slide"
        />
        <Carousel.Caption>
-        <h3>Second slide label</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <h3>Your next bucket list</h3>
+        <p></p>
        </Carousel.Caption>
       </Carousel.Item>
       
@@ -95,8 +98,8 @@ class PlaceWidget extends React.Component {
         alt="Third slide"
        />
        <Carousel.Caption>
-        <h3>Third slide label</h3>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        <h3>Relese all your stress</h3>
+        <p></p>
        </Carousel.Caption>
       </Carousel.Item>
      </Carousel>

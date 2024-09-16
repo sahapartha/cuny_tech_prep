@@ -1,26 +1,53 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-const bcrypt = require('bcryptjs');
-
+import { Form, Input, Button, Checkbox } from 'antd';
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
 
 class RegisterPage extends React.Component {
     state = {
-        error: false,
-        success: false,
+      error: false,
+       success: false,
         email: '',
         password:'',
-        firstname:'',
-        lastname:'',
+        firstName:'',
+        lastName:'',
       }
-    UserInput = (event) => {
-        fetch("/api/users/", {
+      firstChanged = (event) => {
+        this.setState({
+          firstName: event.target.value,
+        });
+      }
+       lastChanged = (event) => {
+          this.setState({
+            lastName: event.target.value,
+          });
+        }
+          emailChanged = (event) => {
+            this.setState({
+              email: event.target.value,
+            });
+          }
+            passChanged = (event) => {
+              this.setState({
+                password: event.target.value,
+              });
+            }
+            
+      saveUser = (event) => {
+        event.preventDefault();
+        fetch("/api/auth/signup", {
           method: 'POST',
           credentials: 'include',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({email: this.state.email}, {password: this.state.password}, {firstname: this.state.firstname}, {lastname: this.state.lastname}),
-          
+          body: JSON.stringify({firstName:this.state.firstName, lastName:this.state.lastName, email:this.state.email, password:this.state.password}),
         })
           .then(res => {
             if(res.ok) {
@@ -40,7 +67,8 @@ class RegisterPage extends React.Component {
             });
           });
       }
-    
+            
+            
       render() {
         if(this.state.success) return <Redirect to="/" />;
     
@@ -54,47 +82,86 @@ class RegisterPage extends React.Component {
         }
 
     return (
+      <form>
+        <Form {...layout} name="basic" initialValues={{ remember: true }}>
+          <div className="input-grup">
+            {errorMessage}
+            <Form.Item
+              label="First Name"
+              rules={[
+                { required: true, message: "Please input your First Name!" },
+              ]}
+              style={{paddingRight: '50px', paddingTop: '20px'}}
+            >
+              <input
+                type="First Name"
+                className="form-control"
+                name="firstName"
+                placeholder="First Name"
+                value={this.state.firstName}
+                onChange={this.firstChanged}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Last Name"
+              rules={[
+                { required: true, message: "Please input your Last Name!" },
+              ]}
+              style={{paddingRight: '50px'}}
+            >
+              <input
+                type="Last Name"
+                className="form-control"
+                name="lastname"
+                placeholder="Last Name"
+                value={this.state.lastName}
+                onChange={this.lastChanged}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[{ required: true, message: "Please input your email!" }]}
+              style={{paddingRight: '50px'}}
+            >
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                placeholder="Email"
+                value={this.state.email}
+                onChange={this.emailChanged}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
+              style={{paddingRight: '50px'}}
+            >
+              <input
+                type="password"
+                className="form-control"
+                name="password"
+                placeholder="Password"
+                value={this.state.password}
+                onChange={this.passChanged}
+              />
+            </Form.Item>
 
-      <form onSubmit={this.login}>
-          <div className="input-group">
-        { errorMessage }
-          <input 
-            type="email"
-            className="form-control"
-            name="email"
-            placeholder="Email" 
-            value={this.state.email} 
-            onChange={this.fieldChanged('email')} />
-          <input 
-            type="password"
-            className="form-control"
-            name="password"
-            placeholder="Password" 
-            value={bcrypt.hashSync(this.state.password, 10)} 
-            onChange={this.fieldChanged('password')} />
-             <input 
-            type="First Name"
-            className="form-control"
-            name="firstname"
-            placeholder="FirstName" 
-            value={this.state.firstname} 
-            onChange={this.fieldChanged('firstname')} />
-         
-         <input 
-            type="Last Name"
-            className="form-control"
-            name="lastname"
-            placeholder="LastName" 
-            value={this.state.lastname} 
-            onChange={this.fieldChanged('lastname')} />
-        
-         
-         
-        <button className="btn btn-primary" onClick={this.UserInput}>Register</button>
-        </div>
+            <Form.Item {...tailLayout}>
+              <button className="btn btn-primary" onClick={this.saveUser}>
+                Register
+              </button>
+            </Form.Item>
+          </div>
+        </Form>
       </form>
     );
   }
+
 }
 
 export default RegisterPage;
